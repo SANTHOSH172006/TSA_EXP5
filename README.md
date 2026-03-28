@@ -1,6 +1,6 @@
 # Ex.No: 05  IMPLEMENTATION OF TIME SERIES ANALYSIS AND DECOMPOSITION
-### Date: 23/02/26
-### Reg No:212223220099
+### Date: 23-03-2026
+
 
 ### AIM:
 To Illustrates how to perform time series analysis and decomposition on the monthly average temperature of a city/country and for airline passengers.
@@ -20,80 +20,52 @@ import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.tsa.seasonal import seasonal_decompose
 
-# Step 1: Load the dataset, Convert 'date' column to datetime format, Set it as index
-data = pd.read_csv('/content/Tesla Dataset.csv', parse_dates=['Date'], index_col='Date') 
+# Step 1: Load the dataset
+# Make sure to upload 'heart_rate.csv' to your Colab environment first
+data = pd.read_csv('/content/heart_rate.csv')
 
-# Step 2: Perform seasonal decomposition using the correct column name
-decomposition = seasonal_decompose(data['Open'], model='additive', period=12)
+# Step 2: Select the 'T1' column and handle missing values
+X = data['T1'].dropna()
 
-# Step 3: Plot the decomposition
-plt.figure(figsize=(10, 12))  # Adjust the figure size
+# Step 3: Perform seasonal decomposition
+# We use a period of 12 for consistency with the original code,
+# as a clear seasonal pattern is not immediately obvious in this data.
+decomposition = seasonal_decompose(X, model='additive', period=12)
 
-# Original Data
+# Step 4: Plot the decomposition
+plt.figure(figsize=(10, 12))
+
+# Original Data Plot
 plt.subplot(411)
-plt.plot(data['Open'], label='Open')
+plt.plot(X, label='Original Data')
 plt.legend(loc='upper left')
-plt.title('Open Prices')
+plt.title('Original Heart Rate Data')
 
 # Trend Plot
 plt.subplot(412)
 plt.plot(decomposition.trend, label='Trend', color='orange')
 plt.legend(loc='upper left')
-plt.title('Trend')
+plt.title('Linear Trend Plot')
 
 # Seasonal Plot
 plt.subplot(413)
 plt.plot(decomposition.seasonal, label='Seasonal', color='green')
 plt.legend(loc='upper left')
-plt.title('Seasonality')
+plt.title('Seasonality Plot')
 
 # Residual Plot
 plt.subplot(414)
 plt.plot(decomposition.resid, label='Residual', color='red')
 plt.legend(loc='upper left')
-plt.title('Residuals')
+plt.title('Residual Plot')
 
 plt.tight_layout()
 plt.show()
-
-
 ```
 
-
-
-
-
-
 ### OUTPUT:
-
-PLOTTING THE DATA:
-
-
-<img width="1264" height="365" alt="image" src="https://github.com/user-attachments/assets/3c8e8c0f-a5ff-42e3-933e-a95e2779af49" />
-
-
-
-
-TREND PLOT REPRESENTATION :
-
-<img width="1264" height="375" alt="image" src="https://github.com/user-attachments/assets/6913ac5a-6b68-43c8-b0b6-6e626c612e05" />
-
-
-
-
-
-SEASONAL PLOT REPRESENTATION :
-
-<img width="1778" height="512" alt="image" src="https://github.com/user-attachments/assets/162d5bde-723b-4361-81da-ea48c1c0c910" />
-
-
-
-
-RESIDUAL PLOT:
-
-<img width="1820" height="516" alt="image" src="https://github.com/user-attachments/assets/a9755665-86f9-4247-9bb1-93c34bd1be34" />
-
-
+<img width="949" height="562" alt="image" src="https://github.com/user-attachments/assets/6b7e9a24-fca6-4fe0-b0db-ebbd4fb960d5" />
+<img width="944" height="562" alt="image" src="https://github.com/user-attachments/assets/a568f5d0-97d2-452a-9be4-74245f1ed968" />
 
 
 ### RESULT:
